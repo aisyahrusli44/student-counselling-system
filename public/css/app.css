@@ -1,0 +1,512 @@
+/* ========================================
+   Student Counselling Appointment System
+   Prototype 1 — Global Design Foundation
+   ======================================== */
+
+:root {
+    --midnight-navy: #202A44;
+    --slate-blue: #526581;
+    --champagne-gold: #C7A96B;
+    --light-grey: #F5F6F9;
+    --white: #FFFFFF;
+    --dark-text: #20263A;
+}
+
+/* Reset */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--dark-text);
+    background-color: var(--light-grey);
+    line-height: 1.6;
+}
+
+/* Headings */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--midnight-navy);
+    margin-top: 0;
+}
+
+/* Links */
+
+a {
+    color: var(--slate-blue);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--champagne-gold);
+}
+
+/* Buttons */
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font: inherit;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-primary {
+    background-color: var(--midnight-navy);
+    color: var(--white);
+}
+
+.btn-gold {
+    background-color: var(--champagne-gold);
+    color: var(--midnight-navy);
+}
+
+.btn-secondary {
+    background-color: var(--slate-blue);
+    color: var(--white);
+}
+
+/* Form controls */
+
+.form-control {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #D9DEE7;
+    border-radius: 6px;
+    background-color: var(--white);
+    color: var(--dark-text);
+    font: inherit;
+}
+
+.form-control:focus {
+    outline: 2px solid var(--champagne-gold);
+    outline-offset: 1px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+    color: var(--midnight-navy);
+}
+
+/* Cards */
+
+.card {
+    padding: 24px;
+    background-color: var(--white);
+    border: 1px solid #E6E9EF;
+    border-radius: 10px;
+}
+
+/* Page container */
+
+.container {
+    width: min(100% - 40px, 1200px);
+    margin-inline: auto;
+}
+
+/* Responsive layout */
+
+@media (max-width: 768px) {
+    .container {
+        width: min(100% - 28px, 1200px);
+    }
+
+    .card {
+        padding: 18px;
+    }
+}
+
+/* ========================================
+   Landing Page
+   ======================================== */
+
+.landing-header {
+    background-color: var(--white);
+    border-bottom: 1px solid #E6E9EF;
+}
+
+.landing-nav {
+    min-height: 82px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--midnight-navy);
+    font-weight: 700;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    background-color: var(--midnight-navy);
+    color: var(--champagne-gold);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.nav-links a:not(.btn) {
+    color: var(--dark-text);
+    font-size: 14px;
+}
+
+.hero {
+    padding: 90px 0;
+    background-color: var(--light-grey);
+}
+
+.hero-content {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 64px;
+}
+
+.hero-text h1 {
+    max-width: 650px;
+    margin: 18px 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.15;
+    letter-spacing: -1px;
+}
+
+.hero-text > p {
+    max-width: 570px;
+    color: var(--slate-blue);
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.eyebrow {
+    color: var(--slate-blue);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 30px;
+}
+
+.btn-outline {
+    border-color: var(--midnight-navy);
+    background-color: transparent;
+    color: var(--midnight-navy);
+}
+
+.hero-visual {
+    min-height: 390px;
+    display: grid;
+    place-items: center;
+    padding: 32px;
+    background-color: var(--midnight-navy);
+    border-radius: 16px;
+}
+
+.visual-card {
+    width: 100%;
+    max-width: 330px;
+    padding: 42px 30px;
+    background-color: var(--white);
+    border: 1px solid var(--champagne-gold);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.visual-symbol {
+    color: var(--champagne-gold);
+    font-size: 52px;
+}
+
+.visual-card h2 {
+    margin: 18px 0 8px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 28px;
+}
+
+.visual-card p {
+    color: var(--slate-blue);
+}
+
+.visual-line {
+    width: 55px;
+    height: 2px;
+    margin: 24px auto;
+    background-color: var(--champagne-gold);
+}
+
+.visual-card > span {
+    color: var(--slate-blue);
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+.about-section {
+    padding: 80px 0;
+    background-color: var(--white);
+}
+
+.section-heading {
+    max-width: 650px;
+    margin: 0 auto 42px;
+    text-align: center;
+}
+
+.section-heading h2,
+.how-content h2 {
+    margin: 14px 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 36px;
+}
+
+.section-heading p,
+.feature-card p,
+.how-content p {
+    color: var(--slate-blue);
+    line-height: 1.8;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.feature-card {
+    border-top: 3px solid var(--champagne-gold);
+}
+
+.feature-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 22px;
+    background-color: var(--light-grey);
+    color: var(--midnight-navy);
+    font-weight: 700;
+}
+
+.feature-card h3 {
+    font-size: 18px;
+}
+
+.how-section {
+    padding: 70px 0;
+    background-color: var(--light-grey);
+}
+
+.how-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.how-content > div {
+    max-width: 650px;
+}
+
+.landing-footer {
+    padding: 22px 0;
+    background-color: var(--midnight-navy);
+    color: var(--white);
+    text-align: center;
+    font-size: 13px;
+}
+
+.landing-footer p {
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .hero-visual {
+        min-height: 320px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .how-content {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 650px) {
+    .landing-nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding-top: 18px;
+        padding-bottom: 18px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .hero {
+        padding: 55px 0;
+    }
+
+    .hero-visual {
+        padding: 20px;
+    }
+
+    .section-heading h2,
+    .how-content h2 {
+        font-size: 30px;
+    }
+}
+
+/* ========================================
+   Authentication Pages
+   ======================================== */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 45px 20px;
+    background-color: var(--light-grey);
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 440px;
+}
+
+.auth-brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+    color: var(--midnight-navy);
+    font-weight: 700;
+}
+
+.auth-card {
+    padding: 38px;
+    background-color: var(--white);
+    border: 1px solid #E6E9EF;
+    border-radius: 12px;
+}
+
+.auth-heading {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.auth-heading .eyebrow {
+    font-size: 10px;
+}
+
+.auth-heading h1 {
+    margin: 14px 0 8px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 34px;
+}
+
+.auth-heading p {
+    margin: 0;
+    color: var(--slate-blue);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.auth-submit {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.auth-divider {
+    margin: 26px 0 16px;
+    color: var(--slate-blue);
+    font-size: 13px;
+    text-align: center;
+}
+
+.auth-register-link {
+    display: block;
+    padding: 11px;
+    border: 1px solid var(--midnight-navy);
+    border-radius: 6px;
+    color: var(--midnight-navy);
+    font-weight: 600;
+    text-align: center;
+}
+
+.auth-register-link:hover {
+    background-color: var(--light-grey);
+    color: var(--midnight-navy);
+}
+
+.auth-back-link {
+    display: block;
+    margin-top: 24px;
+    color: var(--slate-blue);
+    font-size: 13px;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 26px 20px;
+    }
+
+    .auth-heading h1 {
+        font-size: 29px;
+    }
+}
