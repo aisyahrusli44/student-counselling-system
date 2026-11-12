@@ -105,4 +105,64 @@ class AppointmentController extends Controller
             ->route('student.appointments.index')
             ->with('success', 'Appointment submitted successfully!');
     }
+
+    /* Show the edit form for one of the student's own pending appointments. */
+    public function edit(Appointment $appointment): View
+    {
+        $this->ensureOwnPending($appointment);
+
+        return view('student.appointments.edit', compact('appointment'));
+    }
+
+    /* Save changes to a pending appointment. */
+    public function update(Request $request, Appointment $appointment): RedirectResponse
+    {
+        $this->ensureOwnPending($appointment);
+
+        $validated = $request->validate([
+            'preferred_date' => ['required', 'date', 'after_or_equal:today'],
+            'preferred_time' => ['required', 'date_format:H:i'],
+            'purpose' => [
+                'required',
+                'in:Academic Issues,Personal Issues,Career Guidance,Family Issues,Other',
+            ],
+            'other_purpose' => [
+                'required_if:purpose,Other',
+                'nullable',
+                'string',
+                'max:255',
+            ],
+        ]);
+
+        $appointment->update([
+            'preferred_date' => $validated['preferred_date'],
+            'preferred_time' => $validated['preferred_time'],
+            'purpose' => $validated['purpose'] === 'Other'
+                ? $validated['other_purpose']
+                : $validated['purpose'],
+        ]);
+
+        return redirect()
+            ->route('student.appointments.index')
+            ->with('success', 'Appointment updated successfully!');
+    }
+
+    /* Cancel (delete) a pending appointment. */
+    public function destroy(Appointment $appointment): RedirectResponse
+    {
+        $this->ensureOwnPending($appointment);
+
+        $appointment->delete();
+
+        return redirect()
+            ->route('student.appointments.index')
+            ->with('success', 'Appointment request cancelled.');
+    }
+
+    /* Students may only change their own appointments, and only while pending. */
+    private function ensureOwnPending(Appointment $appointment): void
+    {
+        abort_if((int) $appointment->user_id !== (int) Auth::id(), 403, 'Unauthorized access.');
+        abort_if($appointment->status !== 'Pending', 403, 'Only pending appointments can be changed.');
+    }
 }

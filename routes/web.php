@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
     return view('landing');
@@ -64,11 +67,22 @@ Route::get('/admin/dashboard', function () {
         ->take(5)
         ->get();
 
+        // Added for the UI refresh: student total and today's approved sessions
+    $studentCount = \App\Models\User::where('role', 'user')->count();
+
+    $todaySessions = \App\Models\Appointment::with('user')
+        ->where('status', 'Approved')
+        ->whereDate('preferred_date', now()->timezone('Asia/Kuala_Lumpur')->toDateString())
+        ->orderBy('preferred_time', 'asc')
+        ->get();
+
     return view('admin.dashboard', compact(
         'pendingCount',
         'approvedCount',
         'rejectedCount',
-        'recentAppointments'
+        'recentAppointments',
+        'studentCount',
+        'todaySessions'
     ));
 
 })->middleware(['auth', 'role:admin'])->name('admin.dashboard');
@@ -97,3 +111,37 @@ Route::get('/student/appointments/create', [AppointmentController::class, 'creat
 Route::post('/student/appointments', [AppointmentController::class, 'store'])
     ->middleware(['auth', 'role:user'])
     ->name('student.appointments.store');
+
+/*
+|--------------------------------------------------------------------------
+| Pages added with the UI refresh
+|--------------------------------------------------------------------------
+*/
+
+// Profile (students and admins)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+});
+
+// Student: help & support, edit / cancel a pending appointment
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::view('/student/help', 'student.help')->name('student.help');
+
+    Route::get('/student/appointments/{appointment}/edit', [AppointmentController::class, 'edit'])
+        ->name('student.appointments.edit');
+
+    Route::put('/student/appointments/{appointment}', [AppointmentController::class, 'update'])
+        ->name('student.appointments.update');
+
+    Route::delete('/student/appointments/{appointment}', [AppointmentController::class, 'destroy'])
+        ->name('student.appointments.destroy');
+});
+
+// Admin: manage users and reports
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/users/{user}', [AdminUserController::class, 'show'])->name('admin.users.show');
+    Route::get('/admin/reports', [ReportController::class, 'index'])->name('admin.reports.index');
+});

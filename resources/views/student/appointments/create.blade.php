@@ -1,205 +1,128 @@
+@extends('layouts.portal')
 
-@extends('layouts.app')
+@section('title', 'New Appointment | UniCare')
 
-@section('title', 'New Appointment')
+@section('page-title', 'Request a counselling appointment')
+@section('page-subtitle', "Tell us what you'd like to talk about. Everything you share is confidential.")
 
-@section('content')
+@php
+    $purposes = [
+        'Academic Issues' => 'Exams, workload, grades',
+        'Personal Issues' => 'Relationships, wellbeing, life',
+        'Career Guidance' => 'Future plans and decisions',
+        'Family Issues'   => 'Home and family matters',
+        'Other'           => 'Tell us in your own words',
+    ];
+@endphp
 
-<div class="dashboard-layout">
+@section('portal-content')
 
-    <!-- Sidebar -->
-    <aside class="dashboard-sidebar">
+    <form method="POST" action="{{ route('student.appointments.store') }}" class="card" style="max-width: 880px">
+        @csrf
 
-        <div class="dashboard-logo">
-            <span>✦</span> SCA
+        <div class="card-header">
+            <h2>Appointment details</h2>
         </div>
 
-        <nav class="dashboard-nav">
+        <div class="card-body" style="display: flex; flex-direction: column; gap: 28px">
 
-            <a href="{{ route('student.dashboard') }}">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="8" height="8" rx="1"/>
-                    <rect x="13" y="3" width="8" height="8" rx="1"/>
-                    <rect x="3" y="13" width="8" height="8" rx="1"/>
-                    <rect x="13" y="13" width="8" height="8" rx="1"/>
-                </svg>
-                <span>Dashboard</span>
-            </a>
+            @if ($errors->any())
+                <div class="alert alert-error" role="alert">Please check the highlighted fields and try again.</div>
+            @endif
 
-            <a href="{{ route('student.appointments.index') }}">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="4" width="18" height="17" rx="2"/>
-                    <path d="M16 2v4M8 2v4M3 10h18"/>
-                </svg>
-                <span>My Appointments</span>
-            </a>
+            {{-- Step 1: purpose --}}
+            <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px">
+                <legend class="step-title" style="padding: 0 0 14px">
+                    <span class="step-num">1</span> What would you like to discuss?
+                </legend>
 
-            <a href="{{ route('student.appointments.create') }}" class="active">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="4" width="18" height="17" rx="2"/>
-                    <path d="M16 2v4M8 2v4M3 10h18M12 13v5M9.5 15.5h5"/>
-                </svg>
-                <span>New Appointment</span>
-            </a>
-
-            <a href="#">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="8" r="4"/>
-                    <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
-                </svg>
-                <span>Profile</span>
-            </a>
-
-            <a href="#">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="9"/>
-                    <path d="M9.6 9a2.5 2.5 0 1 1 4.5 1.5c-1.3 1.2-2.1 1.5-2.1 3"/>
-                    <path d="M12 17.5v.1"/>
-                </svg>
-                <span>Help &amp; Support</span>
-            </a>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="dashboard-logout">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M10 17l5-5-5-5M15 12H3"/>
-                        <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/>
-                    </svg>
-                    <span>Logout</span>
-                </button>
-            </form>
-
-        </nav>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="dashboard-main">
-
-        <header class="dashboard-header">
-            <div>
-                <h1>New Appointment</h1>
-                <p>Fill in the details to request a counselling appointment.</p>
-            </div>
-
-            <div class="dashboard-user">
-                <span>{{ now()->timezone('Asia/Kuala_Lumpur')->format('l, d F Y') }}</span>
-
-                <div class="user-avatar">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                <div class="choices">
+                    @foreach ($purposes as $value => $description)
+                        <label class="choice">
+                            <input type="radio" name="purpose" value="{{ $value }}"
+                                   {{ old('purpose') === $value ? 'checked' : '' }} required>
+                            <span class="choice-box">
+                                <span class="choice-title">{{ $value }}</span>
+                                <span class="choice-desc">{{ $description }}</span>
+                            </span>
+                        </label>
+                    @endforeach
                 </div>
-            </div>
-        </header>
+                @error('purpose')
+                    <small class="field-error">{{ $message }}</small>
+                @enderror
 
-        <section class="my-appointments-card">
-
-            <div class="section-heading">
-                <h2>Appointment Details</h2>
-            </div>
-
-            <form method="POST" action="{{ route('student.appointments.store') }}">
-                @csrf
-
-                <div class="appointment-form-group">
-                    <label for="preferred_date">Preferred Date</label>
-                    <input
-                        type="date"
-                        id="preferred_date"
-                        name="preferred_date"
-                        value="{{ old('preferred_date') }}"
-                        min="{{ now()->timezone('Asia/Kuala_Lumpur')->format('Y-m-d') }}"
-                        required
-                    >
-                    @error('preferred_date')
-                        <small class="form-error">{{ $message }}</small>
+                <div id="other-purpose-field" class="field-group" hidden>
+                    <label class="field-label" for="other_purpose">Please specify your purpose</label>
+                    <div class="input {{ $errors->has('other_purpose') ? 'has-error' : '' }}">
+                        <input type="text" id="other_purpose" name="other_purpose" value="{{ old('other_purpose') }}"
+                               placeholder="Enter your counselling purpose" maxlength="255">
+                    </div>
+                    @error('other_purpose')
+                        <small class="field-error">{{ $message }}</small>
                     @enderror
                 </div>
+            </fieldset>
 
-                <div class="appointment-form-group">
-                    <label for="preferred_time">Preferred Time</label>
-                    <input
-                        type="time"
-                        id="preferred_time"
-                        name="preferred_time"
-                        value="{{ old('preferred_time') }}"
-                        required
-                    >
-                    @error('preferred_time')
-                        <small class="form-error">{{ $message }}</small>
-                    @enderror
-                </div>
+            {{-- Step 2: date and time --}}
+            <div style="display: flex; flex-direction: column; gap: 14px; border-top: 1px solid var(--border-soft); padding-top: 24px">
+                <h3 class="step-title"><span class="step-num">2</span> When would you like to meet?</h3>
 
-                <div class="appointment-form-group">
-                    <label for="purpose">Appointment Purpose</label>
-
-                    <select id="purpose" name="purpose" required>
-                        <option value="">Select a purpose</option>
-                        <option value="Academic Issues" {{ old('purpose') == 'Academic Issues' ? 'selected' : '' }}>Academic Issues</option>
-                        <option value="Personal Issues" {{ old('purpose') == 'Personal Issues' ? 'selected' : '' }}>Personal Issues</option>
-                        <option value="Career Guidance" {{ old('purpose') == 'Career Guidance' ? 'selected' : '' }}>Career Guidance</option>
-                        <option value="Family Issues" {{ old('purpose') == 'Family Issues' ? 'selected' : '' }}>Family Issues</option>
-                        <option value="Other" {{ old('purpose') == 'Other' ? 'selected' : '' }}>Other</option>
-                    </select>
-                    <div id="other-purpose-field" class="appointment-form-group" style="display: none;">
-                        <label for="other_purpose">Please Specify Your Purpose</label>
-
-                        <input
-                            type="text"
-                            id="other_purpose"
-                            name="other_purpose"
-                            value="{{ old('other_purpose') }}"
-                            placeholder="Enter your counselling purpose"
-                            maxlength="255"
-                        >
-
-                        @error('other_purpose')
-                            <small class="form-error">{{ $message }}</small>
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label class="field-label" for="preferred_date">Preferred date</label>
+                        <div class="input {{ $errors->has('preferred_date') ? 'has-error' : '' }}">
+                            <input type="date" id="preferred_date" name="preferred_date" value="{{ old('preferred_date') }}"
+                                   min="{{ now()->timezone('Asia/Kuala_Lumpur')->format('Y-m-d') }}" required>
+                        </div>
+                        @error('preferred_date')
+                            <small class="field-error">{{ $message }}</small>
                         @enderror
                     </div>
 
-                    @error('purpose')
-                        <small class="form-error">{{ $message }}</small>
-                    @enderror
+                    <div class="field-group">
+                        <label class="field-label" for="preferred_time">Preferred time</label>
+                        <div class="input {{ $errors->has('preferred_time') ? 'has-error' : '' }}">
+                            <input type="time" id="preferred_time" name="preferred_time" value="{{ old('preferred_time') }}" required>
+                        </div>
+                        @error('preferred_time')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
                 </div>
 
-                <div class="appointment-form-actions">
-                    <a href="{{ route('student.appointments.index') }}" class="btn-outline">
-                        Cancel
-                    </a>
+                <p class="field-hint">Your request will be reviewed by the counselling office. You'll see the status update in My appointments.</p>
+            </div>
+        </div>
 
-                    <button type="submit" class="btn-gold">
-                        Submit Appointment
-                    </button>
-                </div>
+        <div class="card-footer">
+            <a href="{{ route('student.appointments.index') }}" class="btn btn-outline">Cancel</a>
+            <button type="submit" class="btn btn-primary">
+                Submit request
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+        </div>
+    </form>
 
-            </form>
+@endsection
 
-        </section>
-
-    </main>
-
-</div>
+@push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const purposeSelect = document.getElementById('purpose');
-        const otherPurposeField = document.getElementById('other-purpose-field');
-        const otherPurposeInput = document.getElementById('other_purpose');
+        var radios = document.querySelectorAll('input[name="purpose"]');
+        var otherField = document.getElementById('other-purpose-field');
+        var otherInput = document.getElementById('other_purpose');
 
-        function toggleOtherPurpose() {
-            if (purposeSelect.value === 'Other') {
-                otherPurposeField.style.display = 'block';
-                otherPurposeInput.required = true;
-            } else {
-                otherPurposeField.style.display = 'none';
-                otherPurposeInput.required = false;
-                otherPurposeInput.value = '';
-            }
+        function toggleOther() {
+            var checked = document.querySelector('input[name="purpose"]:checked');
+            var isOther = checked && checked.value === 'Other';
+            otherField.hidden = !isOther;
+            otherInput.required = isOther;
+            if (!isOther) otherInput.value = '';
         }
 
-        purposeSelect.addEventListener('change', toggleOtherPurpose);
-
-        // Check the selected value when the page loads.
-        toggleOtherPurpose();
+        radios.forEach(function (radio) { radio.addEventListener('change', toggleOther); });
+        toggleOther();
     });
 </script>
-@endsection
+@endpush

@@ -1,124 +1,83 @@
 @extends('layouts.app')
 
-@section('title', 'Register | Student Counselling System')
+@section('title', 'Register | UniCare Student Counselling')
 
 @section('content')
+<div class="auth">
 
-<main class="login-container register-page">
+    @include('auth.partials.brand-panel', ['variant' => 'register'])
 
-    <!-- LEFT PANEL -->
-    <section class="login-welcome-panel">
-
-        <div class="logo">
-            <img src="{{ asset('images/logo.png') }}"
-                alt="UniCare Counselling Appointment System"
-                class="landing-logo">
-
-            <h1>Student Counselling</h1>
-            <p>APPOINTMENT SYSTEM</p>
-        </div>
-
-    </section>
-
-    <!-- RIGHT PANEL: REGISTRATION FORM -->
-    <section class="login-card">
-
-        <form id="registerForm" method="POST" action="{{ route('register.store') }}">
+    <div class="auth-form-col">
+        <form id="registerForm" method="POST" action="{{ route('register.store') }}" class="card auth-card">
             @csrf
 
-            <div class="register-heading">
-                <h2>Create Your Account</h2>
-                <p>Join us to access confidential counselling support and services.</p>
+            <div class="card-header">
+                <h1>Create your account</h1>
+                <p>Join to access confidential counselling support and services.</p>
             </div>
 
-            <div class="form-group">
-                <label for="fullName">Full Name</label>
-                <input
-                    type="text"
-                    id="fullName"
-                    name="full_name"
-                    placeholder="Enter your full name"
-                    value="{{ old('full_name') }}"
-                    autocomplete="name"
-                    required
-                >
-            </div>
+            <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-error" role="alert" id="registerMessage">{{ $errors->first() }}</div>
+                @endif
 
-            <div class="form-group">
-                <label for="studentId">Student ID</label>
-                <input
-                    type="text"
-                    id="studentId"
-                    name="student_id"
-                    placeholder="Enter your student ID"
-                    value="{{ old('student_id') }}"
-                    required
-                >
-            </div>
+                <div class="field-group">
+                    <label class="field-label" for="fullName">Full name</label>
+                    <div class="input {{ $errors->has('full_name') ? 'has-error' : '' }}">
+                        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+                        <input type="text" id="fullName" name="full_name" placeholder="Enter your full name"
+                               value="{{ old('full_name') }}" autocomplete="name" required>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email address"
-                    value="{{ old('email') }}"
-                    autocomplete="email"
-                    required
-                >
-            </div>
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label class="field-label" for="studentId">Student ID</label>
+                        <div class="input {{ $errors->has('student_id') ? 'has-error' : '' }}">
+                            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h3"/></svg>
+                            <input type="text" id="studentId" name="student_id" placeholder="Your student ID"
+                                   value="{{ old('student_id') }}" required>
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Create a password"
-                    minlength="6"
-                    autocomplete="new-password"
-                    required
-                >
-            </div>
+                    <div class="field-group">
+                        <label class="field-label" for="email">Email address</label>
+                        <div class="input {{ $errors->has('email') ? 'has-error' : '' }}">
+                            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                            <input type="email" id="email" name="email" placeholder="you@student.edu"
+                                   value="{{ old('email') }}" autocomplete="email" required>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input
-                    type="password"
-                    id="confirmPassword"
-                    name="password_confirmation"
-                    placeholder="Re-enter your password"
-                    minlength="6"
-                    autocomplete="new-password"
-                    required
-                >
-            </div>
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label class="field-label" for="password">Password</label>
+                        <div class="input {{ $errors->has('password') ? 'has-error' : '' }}">
+                            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                            <input type="password" id="password" name="password" placeholder="Create password"
+                                   minlength="6" autocomplete="new-password" required>
+                        </div>
+                    </div>
 
-            <button type="submit" class="login-button">
-                Create Account
-            </button>
+                    <div class="field-group">
+                        <label class="field-label" for="confirmPassword">Confirm password</label>
+                        <div class="input">
+                            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                            <input type="password" id="confirmPassword" name="password_confirmation" placeholder="Re-enter password"
+                                   minlength="6" autocomplete="new-password" required>
+                        </div>
+                    </div>
+                </div>
+                <span class="field-hint" style="margin-top: -8px">At least 6 characters.</span>
 
-            @if ($errors->any())
-                <p id="registerMessage" class="message">
-                    {{ $errors->first() }}
+                <button type="submit" class="btn btn-gold btn-lg btn-block">Create account</button>
+
+                <p class="auth-switch">
+                    Already have an account? <a href="{{ route('login') }}">Log in here</a>
                 </p>
-            @else
-                <p id="registerMessage" class="message"></p>
-            @endif
-
+            </div>
         </form>
-
-        <div class="register-link">
-            Already have an account?
-            <a href="{{ route('login') }}">Sign in</a>
-        </div>
-
-        <div class="login-footer">
-            Student Counselling Appointment System
-        </div>
-
-    </section>
-</main>
-
+    </div>
+</div>
 @endsection
