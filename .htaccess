@@ -1,0 +1,16 @@
+# ------------------------------------------------------------------
+# Hosting on InfinityFree (or any host whose web root is the project
+# folder itself, e.g. htdocs). Sends every request into Laravel's
+# public folder. Not used locally, where Laragon already serves /public.
+# ------------------------------------------------------------------
+
+# Never serve environment files, even by mistake
+<FilesMatch "^\.env">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ /public/$1 [L]
+</IfModule>
