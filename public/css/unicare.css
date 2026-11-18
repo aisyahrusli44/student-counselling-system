@@ -839,7 +839,7 @@ html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
     .about-topics { grid-template-columns: 1fr; }
 }
 /* Sidebar: bring "STUDENT COUNSELLING" closer to the UniCare logo */
-.sidebar .sidebar-brand { gap: 7px !important; }
+.sidebar .sidebar-brand { gap: 2px !important; }
 .sidebar .sidebar-brand img { margin-bottom: 0 !important; }
 .sidebar .sidebar-brand-sub { margin-top: 0 !important; }
 
