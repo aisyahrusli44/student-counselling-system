@@ -55,8 +55,11 @@
                         <label class="field-label" for="password">Password</label>
                         <div class="input {{ $errors->has('password') ? 'has-error' : '' }}">
                             <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-                            <input type="password" id="password" name="password" placeholder="Create password"
+                                                        <input type="password" id="password" name="password" placeholder="Create password"
                                    minlength="6" autocomplete="new-password" required>
+                            <button type="button" class="icon-btn" data-toggle-password="password" aria-label="Show password">
+                                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
                         </div>
                     </div>
 
@@ -64,8 +67,11 @@
                         <label class="field-label" for="confirmPassword">Confirm password</label>
                         <div class="input">
                             <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-                            <input type="password" id="confirmPassword" name="password_confirmation" placeholder="Re-enter password"
+                                                        <input type="password" id="confirmPassword" name="password_confirmation" placeholder="Re-enter password"
                                    minlength="6" autocomplete="new-password" required>
+                            <button type="button" class="icon-btn" data-toggle-password="confirmPassword" aria-label="Show password">
+                                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -81,3 +87,7 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    @include('auth.partials.password-toggle')
+@endpush

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
@@ -25,10 +26,10 @@ class RegisterController extends Controller
             'password' => ['required', 'confirmed', Password::min(6)],
         ]);
 
-        $user = User::create([
+        User::create([
             'name' => $validated['full_name'],
             'student_id' => $validated['student_id'],
-            'email' => $validated['email'],
+            'email' => Str::lower(trim($validated['email'])),
             'password' => Hash::make($validated['password']),
             'role' => 'user',
         ]);

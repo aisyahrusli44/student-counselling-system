@@ -727,3 +727,126 @@ body { font-size: 14px; }
     .auth-divider { margin: 20px 0 0; }
     .auth-form-col { flex-basis: 100%; min-width: 0; padding: 32px 16px; }
 }
+/* =========================================================
+   Sidebar v4: sticky, balanced logo, profile link + logout icon
+   ========================================================= */
+.portal { align-items: flex-start; }
+.sidebar { position: sticky; top: 0; height: 100vh; overflow: hidden; padding-bottom: 18px; }
+.sidebar-nav { min-height: 0; overflow-y: auto; }
+
+.sidebar-brand { gap: 10px; padding: 4px 0 20px; }
+.sidebar-brand img { width: 150px; }
+.sidebar-brand-sub {
+    font-size: 10px; font-weight: 600; line-height: 1;
+    letter-spacing: .2em; padding-left: .2em; color: var(--gold-light);
+}
+
+.sidebar-footer { flex-direction: row; align-items: center; gap: 8px; }
+.sidebar-user { flex: 1; min-width: 0; border-radius: 6px; text-decoration: none; transition: background .15s; }
+.sidebar-user:hover,
+.sidebar-user.is-active { background: rgba(255, 255, 255, .06); }
+.sidebar-user-name { max-width: 140px; }
+
+.sidebar-logout {
+    flex: none; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; border: 1px solid rgba(255, 255, 255, .14); background: none;
+    color: var(--on-navy); cursor: pointer; transition: background .15s, border-color .15s;
+}
+.sidebar-logout:hover,
+.sidebar-logout:focus-visible { background: rgba(161, 50, 47, .22); border-color: rgba(161, 50, 47, .5); color: #FFFFFF; }
+
+@media (max-width: 900px) {
+    .sidebar { position: static; height: auto; overflow: visible; }
+    .sidebar-nav { overflow: visible; }
+    .sidebar-brand img { width: 84px; }
+    .sidebar-footer { flex-wrap: nowrap; }
+}
+/* Dashboard v4: bigger status badge on Next appointment, bolder text */
+.badge-lg .badge { font-size: 13px; font-weight: 700; padding: 7px 14px; gap: 8px; }
+.badge-lg .badge::before { width: 8px; height: 8px; }
+.badge-lg .badge-pending { border: 1px solid #F0D9A8; }
+.next-appt-title { font-weight: 700; }
+.meta-row strong { color: var(--navy); font-weight: 700; }
+.page-subtitle strong, .field-hint strong, .help-card p strong { color: inherit; font-weight: 700; }
+.help-card p strong { color: #FFFFFF; }
+
+/* New Appointment v4: bolder titles, purposes and labels */
+.step-title { font-weight: 700; font-size: 15px; }
+.choice-title { font-weight: 700; }
+.field-label { font-weight: 700; }
+.card-header h2 { font-weight: 700; }
+.field-hint strong { color: var(--navy); }
+
+/* Log in / Register v4: rounded "Home" button with a gold house icon */
+.auth-back {
+    height: 36px; padding: 0 16px 0 12px; border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 999px; font-size: 13px; font-weight: 600; color: #E6E9F0;
+    transition: background .15s, border-color .15s;
+}
+.auth-back svg { color: var(--gold-light); }
+.auth-back:hover,
+.auth-back:focus-visible { background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .32); color: #FFFFFF; }
+@media (min-width: 901px) {
+    .auth-brand { grid-template-rows: 36px 1fr 36px; }
+}
+
+/* Profile v4: Log out button on the right of the profile card */
+.profile-hero { flex-wrap: wrap; }
+.profile-hero-info { flex: 1 1 220px; min-width: 0; }
+.profile-name { font-weight: 700; }
+.profile-meta strong { color: var(--navy); }
+
+/* =========================================================
+   Landing v4: one balanced, full-screen section per menu item
+   ========================================================= */
+:root { --header-h: 72px; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+
+.land-sec { min-height: calc(100vh - var(--header-h)); display: flex; align-items: center; }
+.land-sec > .container { width: 100%; }
+.land-sec .section,
+.land-sec .hero-inner { padding-top: 56px; padding-bottom: 56px; }
+.section-head .eyebrow { align-self: center; }
+.hero-lead strong, .section-lead strong, .feature p strong, .step p strong { color: var(--navy); }
+
+/* About */
+.about-grid { display: flex; flex-wrap: wrap; align-items: center; gap: 56px; }
+.about-copy { flex: 1 1 440px; display: flex; flex-direction: column; gap: 18px; }
+.about-lead { font-size: 16px; line-height: 1.65; color: var(--text-2); }
+.about-lead strong { color: var(--navy); }
+.about-points { list-style: none; margin: 0; padding: 4px 0 0; display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--navy); }
+.about-points li { display: flex; align-items: center; gap: 10px; }
+.about-points svg { flex: none; }
+.about-card { flex: 1 1 440px; background: var(--navy); border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 20px; color: #FFFFFF; }
+.about-card h3 { font-family: var(--serif); font-size: 22px; font-weight: 600; }
+.about-card > p { font-size: 13px; color: var(--on-navy-muted); }
+.about-card > p strong { color: #FFFFFF; }
+.about-topics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.about-topics div { padding: 16px; border-radius: 6px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); display: flex; flex-direction: column; gap: 4px; }
+.about-topics strong { font-size: 15px; color: var(--gold-light); }
+.about-topics span { font-size: 13px; color: var(--on-navy); }
+
+/* How it works: steps as cards */
+.steps .card.step { padding: 24px; border-top: 3px solid var(--gold); }
+
+/* Contact */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.contact-grid .feature { padding: 24px; }
+.cta-band { padding: 28px 32px; border-radius: 8px; }
+
+@media (max-width: 900px) {
+    .land-sec { min-height: auto; }
+    .about-topics { grid-template-columns: 1fr; }
+}
+/* Sidebar: bring "STUDENT COUNSELLING" closer to the UniCare logo */
+.sidebar .sidebar-brand { gap: 7px !important; }
+.sidebar .sidebar-brand img { margin-bottom: 0 !important; }
+.sidebar .sidebar-brand-sub { margin-top: 0 !important; }
+
+/* Log in / Register: tighter logo-to-wordmark gap, logo block sits a bit higher */
+.auth-brand .auth-logo-mark { gap: 0 !important; }
+.auth-brand .auth-logo-mark img { margin: 0 0 -6px !important; }
+.auth-brand .wordmark { line-height: .95 !important; margin-top: 0 !important; }
+@media (min-width: 901px) {
+    .auth-brand .auth-logo { padding-bottom: 80px !important; }
+}

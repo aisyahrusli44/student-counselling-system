@@ -53,7 +53,7 @@
         <div class="card-header"><h2 id="faq-heading">Frequently asked questions</h2></div>
         <div class="faq">
             @foreach ($faqs as $question => $answer)
-                <details class="faq-item" @if ($loop->first) open @endif>
+                                <details class="faq-item">
                     <summary>
                         {{ $question }}
                         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>

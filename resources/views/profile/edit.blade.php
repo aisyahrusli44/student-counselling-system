@@ -16,10 +16,10 @@
 
     <section class="profile-hero">
         <span class="avatar avatar-lg">{{ $initials }}</span>
-        <div>
+        <div class="profile-hero-info">
             <h2 class="profile-name">{{ $user->name }}</h2>
             <p class="profile-meta">
-                {{ $isAdmin ? 'Administrator' : 'Student' }}
+                <strong>{{ $isAdmin ? 'Administrator' : 'Student' }}</strong>
                 @if (! $isAdmin && $user->student_id)
                     · {{ $user->student_id }}
                 @endif
@@ -28,6 +28,11 @@
                 @endif
             </p>
         </div>
+
+        <button type="button" class="btn btn-danger" onclick="document.getElementById('logout-dialog').showModal()">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+            Log out
+        </button>
     </section>
 
     <div class="split">

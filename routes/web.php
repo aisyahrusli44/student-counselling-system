@@ -61,9 +61,10 @@ Route::get('/admin/dashboard', function () {
 
     $rejectedCount = \App\Models\Appointment::where('status', 'Rejected')->count();
 
+    // Pending requests first (they need action), then the newest submitted
     $recentAppointments = \App\Models\Appointment::with('user')
-        ->orderBy('preferred_date', 'asc')
-        ->orderBy('preferred_time', 'asc')
+        ->orderByRaw("CASE WHEN status = 'Pending' THEN 0 ELSE 1 END")
+        ->latest()
         ->take(5)
         ->get();
 

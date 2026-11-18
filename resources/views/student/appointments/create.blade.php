@@ -3,7 +3,9 @@
 @section('title', 'New Appointment | UniCare')
 
 @section('page-title', 'Request a counselling appointment')
-@section('page-subtitle', "Tell us what you'd like to talk about. Everything you share is confidential.")
+@section('page-subtitle')
+    Tell us what you'd like to talk about. Everything you share is <strong>confidential</strong>.
+@endsection
 
 @php
     $purposes = [
@@ -91,7 +93,7 @@
                     </div>
                 </div>
 
-                <p class="field-hint">Your request will be reviewed by the counselling office. You'll see the status update in My appointments.</p>
+                                <p class="field-hint">Your request will be reviewed by the <strong>counselling office</strong>. You'll see the status update in <strong>My Appointments</strong>.</p>
             </div>
         </div>
 

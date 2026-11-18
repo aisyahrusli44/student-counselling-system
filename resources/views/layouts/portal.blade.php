@@ -68,18 +68,18 @@
             @endforeach
         </nav>
 
-        <div class="sidebar-footer">
-            <div class="sidebar-user">
+            <div class="sidebar-footer">
+            <a href="{{ route('profile.edit') }}" class="sidebar-user {{ request()->routeIs('profile.*') ? 'is-active' : '' }}" title="View my profile">
                 <span class="avatar">{{ $initials }}</span>
                 <span>
                     <span class="sidebar-user-name">{{ $user->name }}</span>
-                    <span class="sidebar-user-role">{{ $isAdmin ? 'Administrator' : 'Student' }}</span>
+                    <span class="sidebar-user-role">View profile</span>
                 </span>
-            </div>
+            </a>
 
-            <button type="button" class="nav-link" onclick="document.getElementById('logout-dialog').showModal()">
+            <button type="button" class="sidebar-logout" aria-label="Log out" title="Log out"
+                    onclick="document.getElementById('logout-dialog').showModal()">
                 <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-                <span>Logout</span>
             </button>
         </div>
     </aside>

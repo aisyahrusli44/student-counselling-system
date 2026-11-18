@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class LoginController extends Controller
@@ -16,32 +17,36 @@ class LoginController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-            $credentials = $request->validate([
-                'email' => ['required', 'email'],
-                'password' => ['required', 'string'],
-            ]);
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ]);
 
-            $remember = $request->boolean('remember');
+        // Ignore capital letters / spaces in the email
+        $credentials['email'] = Str::lower(trim($credentials['email']));
 
-            if (Auth::attempt($credentials, $remember)) {
-                $request->session()->regenerate();
+        $remember = $request->boolean('remember');
 
-                if (Auth::user()->role === 'admin') {
-                    return redirect()->route('admin.dashboard')
-                        ->with('success', 'Login successful!');
-                }
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
 
-                return redirect()->route('student.dashboard')
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard')
                     ->with('success', 'Login successful!');
             }
 
-            return back()
-                ->withErrors([
-                    'email' => 'The email address or password is incorrect.',
-                ])
-                ->onlyInput('email');
+            return redirect()->route('student.dashboard')
+                ->with('success', 'Login successful!');
         }
-        public function destroy(Request $request): RedirectResponse
+
+        return back()
+            ->withErrors([
+                'email' => 'The email address or password is incorrect.',
+            ])
+            ->onlyInput('email');
+    }
+
+    public function destroy(Request $request): RedirectResponse
     {
         Auth::logout();
 

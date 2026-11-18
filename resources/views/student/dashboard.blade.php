@@ -2,8 +2,11 @@
 
 @section('title', 'Student Dashboard | UniCare')
 
-@section('page-title', 'Welcome back, ' . Auth::user()->name)
-@section('page-subtitle', "Here's an overview of your counselling sessions.")
+@section('page-title', 'Welcome, ' . Auth::user()->name)
+
+@section('page-subtitle')
+    Here's an overview of your <strong>counselling sessions</strong>.
+@endsection
 
 @section('page-actions')
     <a href="{{ route('student.appointments.create') }}" class="btn btn-gold">
@@ -33,61 +36,7 @@
 
 @section('portal-content')
 
-    <div class="dash-grid">
-        <section class="card span-2" aria-labelledby="next-heading">
-            <div class="card-header">
-                <h2 id="next-heading">Next appointment</h2>
-                @if ($upcoming)
-                    @include('partials.status-badge', ['status' => $upcoming->status])
-                @endif
-            </div>
-            <div class="card-body">
-                @if ($upcoming)
-                    @php $date = \Carbon\Carbon::parse($upcoming->preferred_date); @endphp
-                    <div class="next-appt">
-                        <div class="date-tile" aria-hidden="true">
-                            <span class="date-tile-mon">{{ strtoupper($date->format('M')) }}</span>
-                            <span class="date-tile-day">{{ $date->format('d') }}</span>
-                            <span class="date-tile-dow">{{ $date->format('D') }}</span>
-                        </div>
-                        <div>
-                            <p class="next-appt-title">{{ $upcoming->purpose }}</p>
-                            <div class="meta-row">
-                                <span>
-                                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
-                                    {{ $date->format('l, d F Y') }}
-                                </span>
-                                <span>
-                                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                                    {{ \Carbon\Carbon::parse($upcoming->preferred_time)->format('h:i A') }}
-                                </span>
-                            </div>
-                            @if ($upcoming->status === 'Pending')
-                                <p class="field-hint" style="margin-top: 10px">Your request is waiting for the counselling office to review it.</p>
-                            @endif
-                        </div>
-                    </div>
-                @else
-                    <div class="empty-state">
-                        <strong>No upcoming appointments</strong>
-                        <span>When you book a session, it will show up here.</span>
-                        <a href="{{ route('student.appointments.create') }}" class="btn btn-primary">Book an appointment</a>
-                    </div>
-                @endif
-            </div>
-        </section>
-
-        <section class="help-card" aria-labelledby="help-heading">
-            <div class="help-icon">
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
-            </div>
-            <h2 id="help-heading">Need help right now?</h2>
-            <p>If you're in distress or feel unsafe, don't wait for an appointment. Reach out immediately.</p>
-            {{-- TODO: replace with your campus helpline number --}}
-            <a href="#" class="btn btn-gold" style="align-self: flex-start; margin-top: auto">Call [CAMPUS HELPLINE]</a>
-        </section>
-    </div>
-
+    {{-- 1. Summary counts (right under the welcome heading) --}}
     <div class="stats">
         <div class="stat">
             <div class="stat-icon info"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></div>
@@ -107,6 +56,65 @@
         </div>
     </div>
 
+    {{-- 2. Next appointment + help card --}}
+    <div class="dash-grid">
+        <section class="card span-2" aria-labelledby="next-heading">
+            <div class="card-header">
+                <h2 id="next-heading">Next appointment</h2>
+                @if ($upcoming)
+                    <span class="badge-lg">@include('partials.status-badge', ['status' => $upcoming->status])</span>
+                @endif
+            </div>
+            <div class="card-body">
+                @if ($upcoming)
+                    @php $date = \Carbon\Carbon::parse($upcoming->preferred_date); @endphp
+                    <div class="next-appt">
+                        <div class="date-tile" aria-hidden="true">
+                            <span class="date-tile-mon">{{ strtoupper($date->format('M')) }}</span>
+                            <span class="date-tile-day">{{ $date->format('d') }}</span>
+                            <span class="date-tile-dow">{{ $date->format('D') }}</span>
+                        </div>
+                        <div>
+                            <p class="next-appt-title">{{ $upcoming->purpose }}</p>
+                            <div class="meta-row">
+                                <span>
+                                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                                    <strong>{{ $date->format('l, d F Y') }}</strong>
+                                </span>
+                                <span>
+                                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                                    <strong>{{ \Carbon\Carbon::parse($upcoming->preferred_time)->format('h:i A') }}</strong>
+                                </span>
+                            </div>
+                            @if ($upcoming->status === 'Pending')
+                                <p class="field-hint" style="margin-top: 10px">Waiting for the <strong>counselling office</strong> to review your request.</p>
+                            @endif
+                        </div>
+                    </div>
+                @else
+                    <div class="empty-state">
+                        <strong>No upcoming appointments</strong>
+                        <span>When you book a session, it will show up here.</span>
+                        <a href="{{ route('student.appointments.create') }}" class="btn btn-primary">Book an appointment</a>
+                    </div>
+                @endif
+            </div>
+        </section>
+
+        <section class="help-card" aria-labelledby="help-heading">
+            <div class="help-icon">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M14.8 14.8l3.6 3.6M18.4 5.6l-3.6 3.6M9.2 14.8l-3.6 3.6"/></svg>
+            </div>
+            <h2 id="help-heading">Need help right now?</h2>
+            <p>If you're in distress or feel unsafe, <strong>don't wait for an appointment</strong>. Help &amp; Support lists who to contact and what to do.</p>
+            <a href="{{ route('student.help') }}" class="btn btn-gold" style="align-self: flex-start; margin-top: auto">
+                Go to Help &amp; Support
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+        </section>
+    </div>
+
+    {{-- 3. Recent appointments --}}
     <section class="card" aria-labelledby="recent-heading">
         <div class="card-header">
             <h2 id="recent-heading">Recent appointments</h2>
@@ -122,7 +130,7 @@
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($appointment->preferred_date)->format('d M Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($appointment->preferred_time)->format('h:i A') }}</td>
-                            <td>{{ $appointment->purpose }}</td>
+                            <td><strong>{{ $appointment->purpose }}</strong></td>
                             <td>@include('partials.status-badge', ['status' => $appointment->status])</td>
                         </tr>
                     @empty

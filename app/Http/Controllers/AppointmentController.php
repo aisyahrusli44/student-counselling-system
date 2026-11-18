@@ -31,9 +31,10 @@ class AppointmentController extends Controller
     /* Display all appointments for the administrator. */
     public function adminIndex(): View
     {
+         // Pending requests first (they need action), then the newest submitted
         $appointments = Appointment::with('user')
-            ->orderBy('preferred_date', 'asc')
-            ->orderBy('preferred_time', 'asc')
+            ->orderByRaw("CASE WHEN status = 'Pending' THEN 0 ELSE 1 END")
+            ->latest()
             ->get();
 
         return view('admin.appointments.index', compact('appointments'));
