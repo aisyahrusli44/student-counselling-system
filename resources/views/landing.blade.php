@@ -8,7 +8,7 @@
 <header class="site-header">
     <div class="container site-nav">
         <a href="#home" class="site-brand">
-            <img src="{{ asset('images/unicare-logo.png') }}" alt="">
+                       <img src="{{ asset('images/unicare-logo.png') }}?v={{ filemtime(public_path('images/unicare-logo.png')) }}" alt="">
             <span>
                 <span class="site-brand-name">UniCare</span>
                 <span class="site-brand-sub">Student Counselling</span>

@@ -7,7 +7,7 @@
 
     <div class="auth-logo">
         <div class="auth-logo-mark">
-            <img src="{{ asset('images/unicare-symbol.png') }}" alt="UniCare logo">
+                        <img src="{{ asset('images/unicare-symbol.png') }}?v={{ filemtime(public_path('images/unicare-symbol.png')) }}" alt="UniCare logo">
             <span class="wordmark">UniCare</span>
             <span class="auth-logo-title">Student Counselling</span>
             <span class="auth-logo-sub">APPOINTMENT SYSTEM</span>

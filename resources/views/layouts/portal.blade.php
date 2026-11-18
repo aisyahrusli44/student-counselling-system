@@ -52,7 +52,7 @@
 
     <aside class="sidebar">
         <a href="{{ route($isAdmin ? 'admin.dashboard' : 'student.dashboard') }}" class="sidebar-brand">
-            <img src="{{ asset('images/unicare-logo.png') }}" alt="UniCare">
+                        <img src="{{ asset('images/unicare-logo.png') }}?v={{ filemtime(public_path('images/unicare-logo.png')) }}" alt="UniCare">
             <span class="sidebar-brand-sub">{{ $isAdmin ? 'Administrator' : 'Student Counselling' }}</span>
         </a>
 
