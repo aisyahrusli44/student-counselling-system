@@ -17,7 +17,7 @@
 
 @section('portal-content')
 
-    <form method="POST" action="{{ route('student.appointments.store') }}" class="card" style="max-width: 880px">
+        <form method="POST" action="{{ route('student.appointments.store') }}" class="card">
         @csrf
 
         <div class="card-header">

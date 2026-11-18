@@ -29,8 +29,7 @@
         Back to my appointments
     </a>
 
-    <form method="POST" action="{{ route('student.appointments.update', $appointment->id) }}" class="card" style="max-width: 880px">
-        @csrf
+        <form method="POST" action="{{ route('student.appointments.update', $appointment->id) }}" class="card">
         @method('PUT')
 
         <div class="card-header">
