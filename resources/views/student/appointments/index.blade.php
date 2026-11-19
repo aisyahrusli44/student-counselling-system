@@ -50,7 +50,7 @@
                     @forelse ($appointments as $appointment)
                         <tr data-status="{{ strtolower($appointment->status) }}">
                             <td>{{ \Carbon\Carbon::parse($appointment->preferred_date)->format('d M Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($appointment->preferred_time)->format('h:i A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($appointment->preferred_time)->format('H:i') }}</td>
                             <td>{{ $appointment->purpose }}</td>
                             <td>@include('partials.status-badge', ['status' => $appointment->status])</td>
                             <td class="text-right">
@@ -66,7 +66,7 @@
                                         <div class="dialog-body">
                                             <p>Your {{ $appointment->purpose }} request for
                                                {{ \Carbon\Carbon::parse($appointment->preferred_date)->format('d M Y') }},
-                                               {{ \Carbon\Carbon::parse($appointment->preferred_time)->format('h:i A') }}
+                                               {{ \Carbon\Carbon::parse($appointment->preferred_time)->format('H:i') }}
                                                will be removed. This can't be undone.</p>
                                         </div>
                                         <div class="dialog-actions">

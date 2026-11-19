@@ -13,7 +13,7 @@
         <div class="dialog-body">
             <p>Approve <strong>{{ $appointment->user->name }}</strong>'s request for
                {{ \Carbon\Carbon::parse($appointment->preferred_date)->format('d M Y') }},
-               {{ \Carbon\Carbon::parse($appointment->preferred_time)->format('h:i A') }}?</p>
+               {{ \Carbon\Carbon::parse($appointment->preferred_time)->format('H:i') }}?</p>
         </div>
         <div class="dialog-actions">
             <button type="button" class="btn btn-outline"
@@ -51,7 +51,7 @@
             <dt>Student</dt><dd>{{ $appointment->user->name }}</dd>
             <dt>Date &amp; time</dt>
             <dd>{{ \Carbon\Carbon::parse($appointment->preferred_date)->format('d M Y') }},
-                {{ \Carbon\Carbon::parse($appointment->preferred_time)->format('h:i A') }}</dd>
+                {{ \Carbon\Carbon::parse($appointment->preferred_time)->format('H:i') }}</dd>
             <dt>Purpose</dt><dd>{{ $appointment->purpose }}</dd>
             <dt>Status</dt><dd>{{ $appointment->status }}</dd>
             @if ($appointment->status === 'Rejected')

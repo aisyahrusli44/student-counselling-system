@@ -40,7 +40,7 @@
 
                 <div class="choices">
                     @foreach ($purposes as $value => $description)
-                        <label class="choice">
+                            <label class="choice purpose-{{ strtolower(strtok($value, ' ')) }}">
                             <input type="radio" name="purpose" value="{{ $value }}"
                                    {{ old('purpose') === $value ? 'checked' : '' }} required>
                             <span class="choice-box">

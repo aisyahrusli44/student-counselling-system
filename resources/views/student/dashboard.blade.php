@@ -75,7 +75,8 @@
                             <span class="date-tile-dow">{{ $date->format('D') }}</span>
                         </div>
                         <div>
-                            <p class="next-appt-title">{{ $upcoming->purpose }}</p>
+                             @include('partials.purpose-tag', ['purpose' => $upcoming->purpose])
+                            <p class="next-appt-title" style="margin-top: 8px">{{ $upcoming->purpose }}</p>
                             <div class="meta-row">
                                 <span>
                                     <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
@@ -83,7 +84,7 @@
                                 </span>
                                 <span>
                                     <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                                    <strong>{{ \Carbon\Carbon::parse($upcoming->preferred_time)->format('h:i A') }}</strong>
+                                    <strong>{{ \Carbon\Carbon::parse($upcoming->preferred_time)->format('H:i') }}</strong>
                                 </span>
                             </div>
                             @if ($upcoming->status === 'Pending')
@@ -129,8 +130,8 @@
                     @forelse ($recent as $appointment)
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($appointment->preferred_date)->format('d M Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($appointment->preferred_time)->format('h:i A') }}</td>
-                            <td><strong>{{ $appointment->purpose }}</strong></td>
+                            <td>{{ \Carbon\Carbon::parse($appointment->preferred_time)->format('H:i') }}</td>
+                            <td>@include('partials.purpose-tag', ['purpose' => $appointment->purpose])</td>
                             <td>@include('partials.status-badge', ['status' => $appointment->status])</td>
                         </tr>
                     @empty

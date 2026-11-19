@@ -34,7 +34,8 @@ class AppointmentController extends Controller
          // Pending requests first (they need action), then the newest submitted
         $appointments = Appointment::with('user')
             ->orderByRaw("CASE WHEN status = 'Pending' THEN 0 ELSE 1 END")
-            ->latest()
+            ->orderBy('preferred_date', 'asc')
+            ->orderBy('preferred_time', 'asc')
             ->get();
 
         return view('admin.appointments.index', compact('appointments'));

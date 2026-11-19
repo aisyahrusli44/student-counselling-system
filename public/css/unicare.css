@@ -838,10 +838,10 @@ html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
     .land-sec { min-height: auto; }
     .about-topics { grid-template-columns: 1fr; }
 }
-/* Sidebar: bring "STUDENT COUNSELLING" closer to the UniCare logo */
-.sidebar .sidebar-brand { gap: 2px !important; }
-.sidebar .sidebar-brand img { margin-bottom: 0 !important; }
-.sidebar .sidebar-brand-sub { margin-top: 0 !important; }
+/* Sidebar: bring the sub-title closer to the UniCare logo (student + admin) */
+.sidebar .sidebar-brand { gap: 0 !important; }
+.sidebar .sidebar-brand img { margin-bottom: 0 !important; display: block; }
+.sidebar .sidebar-brand-sub { margin-top: 4px !important; line-height: 1 !important; }
 
 /* Log in / Register: tighter logo-to-wordmark gap, logo block sits a bit higher */
 .auth-brand .auth-logo-mark { gap: 0 !important; }
@@ -867,4 +867,61 @@ html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
 
 @media (max-width: 900px) {
     .help-grid { grid-template-columns: 1fr; }
+}
+/* Contact: only Email + Phone, centred side by side */
+.contact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 760px; width: 100%; margin: 0 auto; }
+@media (max-width: 600px) {
+    .contact-grid { grid-template-columns: 1fr; }
+}
+/* Purpose colours (kept different from status colours) */
+.purpose-academic { --p: #2F4F8A; --p-bg: #E8EEF9; }
+.purpose-personal { --p: #6B3FA0; --p-bg: #F1EAFB; }
+.purpose-career   { --p: #0F6E6E; --p-bg: #E2F4F3; }
+.purpose-family   { --p: #A3346A; --p-bg: #FBE8F1; }
+.purpose-other    { --p: #4A5468; --p-bg: #EEF0F3; }
+
+.purpose-tag {
+    display: inline-flex; align-items: center; gap: 6px; max-width: 260px;
+    padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700;
+    color: var(--p); background: var(--p-bg);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.purpose-tag::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 2px; background: var(--p); }
+
+/* Same colour as a small square on the New Appointment choice cards */
+.choice .choice-title { display: inline-flex; align-items: center; gap: 8px; }
+.choice .choice-title::before { content: ""; flex: none; width: 10px; height: 10px; border-radius: 3px; background: var(--p, var(--muted)); }
+
+/* =========================================================
+   Landing v5
+   ========================================================= */
+
+/* Even space above/below the content: a little less on top, more below */
+.land-sec .section,
+.land-sec .hero-inner { padding-top: 28px; padding-bottom: 64px; }
+.land-sec .section { gap: 28px; }
+.hero-art { height: 400px; }
+
+/* About: justified paragraphs, text column and navy card the same height */
+.about-grid { align-items: stretch; gap: 48px; }
+.about-copy { justify-content: center; }
+.about-lead { text-align: justify; text-justify: inter-word; hyphens: auto; }
+.about-card { justify-content: center; }
+
+/* Contact: compact cards (icon on the left) so the navy band fits on screen */
+#contact .section { gap: 22px; }
+#contact .section-head { gap: 8px; }
+#contact .contact-grid .feature {
+    display: grid; grid-template-columns: 48px 1fr; align-items: center;
+    column-gap: 16px; row-gap: 2px; padding: 18px 20px;
+}
+#contact .contact-grid .feature-icon { grid-row: span 2; }
+#contact .contact-grid .feature h3 { font-size: 15px; }
+#contact .contact-grid .feature p { font-size: 14px; line-height: 1.5; }
+#contact .cta-band { padding: 22px 28px; }
+#contact .cta-band h2 { font-size: 22px; }
+#contact .cta-band p { margin-top: 4px; font-size: 14px; }
+
+@media (max-width: 900px) {
+    .about-lead { text-align: left; }
 }

@@ -68,8 +68,8 @@
                                 </div>
                             </td>
                             <td>{{ \Carbon\Carbon::parse($appointment->preferred_date)->format('d M Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($appointment->preferred_time)->format('h:i A') }}</td>
-                            <td>{{ $appointment->purpose }}</td>
+                            <td>{{ \Carbon\Carbon::parse($appointment->preferred_time)->format('H:i') }}</td>
+                            <td>@include('partials.purpose-tag', ['purpose' => $appointment->purpose])</td>
                             <td>@include('partials.status-badge', ['status' => $appointment->status])</td>
                             <td class="text-right">@include('admin.partials.appointment-actions', ['appointment' => $appointment])</td>
                         </tr>

@@ -29,7 +29,8 @@
         Back to my appointments
     </a>
 
-        <form method="POST" action="{{ route('student.appointments.update', $appointment->id) }}" class="card">
+    <form method="POST" action="{{ route('student.appointments.update', $appointment->id) }}" class="card">
+        @csrf
         @method('PUT')
 
         <div class="card-header">
@@ -50,7 +51,7 @@
 
                 <div class="choices">
                     @foreach ($purposes as $value => $description)
-                        <label class="choice">
+                        <label class="choice purpose-{{ strtolower(strtok($value, ' ')) }}">
                             <input type="radio" name="purpose" value="{{ $value }}"
                                    {{ $currentPurpose === $value ? 'checked' : '' }} required>
                             <span class="choice-box">

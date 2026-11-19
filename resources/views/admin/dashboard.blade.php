@@ -46,10 +46,10 @@
                             <tr>
                                 <td class="cell-strong">
                                     {{ $appointment->user->name }}
-                                    <span class="cell-sub">{{ \Carbon\Carbon::parse($appointment->preferred_time)->format('h:i A') }}</span>
+                                    <span class="cell-sub">{{ \Carbon\Carbon::parse($appointment->preferred_time)->format('H:i') }}</span>
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($appointment->preferred_date)->format('d M Y') }}</td>
-                                <td>{{ $appointment->purpose }}</td>
+                                <td>@include('partials.purpose-tag', ['purpose' => $appointment->purpose])</td>
                                 <td>@include('partials.status-badge', ['status' => $appointment->status])</td>
                                 <td class="text-right">@include('admin.partials.appointment-actions', ['appointment' => $appointment])</td>
                             </tr>
@@ -70,7 +70,7 @@
                     <div class="session-list">
                         @foreach ($todaySessions as $session)
                             <div class="session">
-                                <span class="session-time">{{ \Carbon\Carbon::parse($session->preferred_time)->format('h:i A') }}</span>
+                                <span class="session-time">{{ \Carbon\Carbon::parse($session->preferred_time)->format('H:i') }}</span>
                                 <div>
                                     <div class="session-name">{{ $session->user->name }}</div>
                                     <div class="session-sub">{{ $session->purpose }}</div>
